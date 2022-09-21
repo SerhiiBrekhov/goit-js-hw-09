@@ -503,9 +503,35 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"8tzFL":[function(require,module,exports) {
+const formField = document.querySelector(".form");
+const buttonSubmit = document.querySelector(".form button");
+formField.addEventListener("submit", (event)=>{
+    event.preventDefault();
+    const { elements: { strike , step , amount  }  } = event.target;
+    let delay1 = Number(strike.value);
+    for(let position1 = 1; position1 <= Number(amount.value); position1 += 1){
+        createPromise(position1, delay1).then(({ position , delay  })=>{
+            console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        }).catch(({ position , delay  })=>{
+            console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+        });
+        delay1 = delay1 + Number(step.value);
+    }
+});
 function createPromise(position, delay) {
-    const shouldResolve = Math.random() > 0.3;
-    shouldResolve;
+    return new Promise((resolve, reject)=>{
+        setTimeout(()=>{
+            const shouldResolve = Math.random() > 0.3;
+            if (shouldResolve) resolve({
+                position,
+                delay
+            }); // Fulfill
+            else reject({
+                position,
+                delay
+            }); // Reject
+        }, delay);
+    });
 }
 
 },{}]},["dDjGg","8tzFL"], "8tzFL", "parcelRequired7c6")
