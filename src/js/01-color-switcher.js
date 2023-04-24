@@ -6,13 +6,16 @@ const bodyIns = document.querySelector("body");
 let timerId = null;
 
 startButton.addEventListener('click', () => {
+  clearInterval(timerId);
     timerId = setInterval(() => {
         let colorNumber = getRandomHexColor();
         bodyIns.style.backgroundColor = colorNumber;
+        console.log("new color")
     }, 1000);
 });
     
 stopButton.addEventListener('click', () => {
+  console.log("stop")
   clearInterval(timerId);
 });
 
